@@ -1,4 +1,5 @@
-# slide_viewer.py. Created with Python version 3.9.7, Numpy version 1.21.4 by David Boe, (C) by David Boe
+# slide_viewer.py. 
+Created with Python version 3.9.7, Numpy version 1.21.4 
 Python 3 implementation of a class for a digital slide viewer. 
 
 Computes which pixel on a slide to retrieve and display in a pixel in slide 
