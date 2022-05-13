@@ -35,8 +35,9 @@ class Display:
     def rotate_slide(self, theta):
         # Form rotation matrix
         R = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
-        X = np.matmul(R, self._S)
+        X = np.matmul(R, self.S())
         self._S = np.array(X)
+        return self.S()
         
 
 def main():
@@ -52,20 +53,20 @@ def main():
     angle = 90 # [ degrees ]
     theta = angle*np.pi/180 # [ radians ]
     # update the slide coordinate to display in the viewer pixel after the rotation
-    V1.rotate_slide(theta)
+    slide_pixel_rot_1 = V1.rotate_slide(theta)
 
     # Output the slide pixel to display in the viewer after a rotation
     print(f"\nAfter a {angle} degree rotation of the slide by the user:")
-    print(f"Viewer pixel ({V1.V()[0]:.2f}, {V1.V()[1]:.2f}) displays slide pixel ({V1.S()[0]:.2f}, {V1.S()[1]:.2f})")
+    print(f"Viewer pixel ({V1.V()[0]:.2f}, {V1.V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_1[0]:.2f}, {slide_pixel_rot_1[1]:.2f})")
 
     # Rotate back again
     angle = -angle # [ degrees ] Negative rotation angle is a clockwise rotation 
     theta = -theta # [ radians ]
-    V1.rotate_slide(theta)
+    slide_pixel_rot_2 = V1.rotate_slide(theta)
 
     # Output the slide pixel to display in the viewer after a rotation
     print(f"\nAfter a {angle} degree rotation of the slide by the user:")
-    print(f"Viewer pixel ({V1.V()[0]:.2f}, {V1.V()[1]:.2f}) displays slide pixel ({V1.S()[0]:.2f}, {V1.S()[1]:.2f})\n")
+    print(f"Viewer pixel ({V1.V()[0]:.2f}, {V1.V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_2[0]:.2f}, {slide_pixel_rot_2[1]:.2f})\n")
 
 
 if __name__ == "__main__":
