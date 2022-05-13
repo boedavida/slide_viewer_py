@@ -26,18 +26,28 @@ class Display:
         self._V = np.array([Vx, Vy])
         self._S = np.array([Sx, Sy])
 
-    def V(self):
+    # Setter for _V
+    def set_V(self, a):
+        self._V = a
+
+    # Setter for _S
+    def set_S(self, b):
+        self._S = b
+
+    # Getter for _V
+    def get_V(self):
         return self._V
 
-    def S(self):
+    # Getter for _S
+    def get_S(self):
         return self._S
 
     def rotate_slide(self, theta):
         # Form rotation matrix
         R = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
-        X = np.matmul(R, self.S())
+        X = np.matmul(R, self.get_S())
         self._S = np.array(X)
-        return self.S()
+        return self.get_S()
         
 
 def main():
@@ -46,8 +56,7 @@ def main():
 
     # Output display on initial loading
     print("\nOn initially loading the silde into the viewer:")
-    V = V1.V()
-    print(f"Viewer pixel ({V1.V()[0]:.2f}, {V1.V()[1]:.2f}) displays slide pixel ({V1.S()[0]:.2f}, {V1.S()[1]:.2f})") 
+    print(f"Viewer pixel ({V1.get_V()[0]:.2f}, {V1.get_V()[1]:.2f}) displays slide pixel ({V1.get_S()[0]:.2f}, {V1.get_S()[1]:.2f})") 
 
     # User rotation - counter-clockwise rotation of the slide around the center
     angle = 90 # [ degrees ]
@@ -57,7 +66,7 @@ def main():
 
     # Output the slide pixel to display in the viewer after a rotation
     print(f"\nAfter a {angle} degree rotation of the slide by the user:")
-    print(f"Viewer pixel ({V1.V()[0]:.2f}, {V1.V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_1[0]:.2f}, {slide_pixel_rot_1[1]:.2f})")
+    print(f"Viewer pixel ({V1.get_V()[0]:.2f}, {V1.get_V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_1[0]:.2f}, {slide_pixel_rot_1[1]:.2f})")
 
     # Rotate back again
     angle = -angle # [ degrees ] Negative rotation angle is a clockwise rotation 
@@ -66,7 +75,7 @@ def main():
 
     # Output the slide pixel to display in the viewer after a rotation
     print(f"\nAfter a {angle} degree rotation of the slide by the user:")
-    print(f"Viewer pixel ({V1.V()[0]:.2f}, {V1.V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_2[0]:.2f}, {slide_pixel_rot_2[1]:.2f})\n")
+    print(f"Viewer pixel ({V1.get_V()[0]:.2f}, {V1.get_V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_2[0]:.2f}, {slide_pixel_rot_2[1]:.2f})\n")
 
 
 if __name__ == "__main__":
