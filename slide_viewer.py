@@ -22,32 +22,45 @@ is embarrassingly parallel and so is amenable to GPU impleementation."""
 import numpy as np
 
 class Display:
-    def __init__(self, Vx, Vy, Sx, Sy):
-        self._V = np.array([Vx, Vy])
-        self._S = np.array([Sx, Sy])
+    def __init__(self, Vx0, Vy0, Sx0, Sy0):
+        self._Vx = Vx0
+        self._Vy = Vy0
+        self._Sx = Sx0
+        self._Sy = Sy0
+    
+    # Setter/getter for _Vx
+    def Vx(self, a=None):
+        if a: self._Vx = a
+        return self._Vx
 
-    # Setter for _V
-    def set_V(self, a):
-        self._V = a
+    # Setter/getter for _Vy
+    def Vy(self, b=None):
+        if b: self._Vy = b
+        return self._Vy
 
-    # Setter for _S
-    def set_S(self, b):
-        self._S = b
+    # Setter/getter for _Sx
+    def Sx(self, c=None):
+        if c: self._Sx = c
+        return self._Sx
 
-    # Getter for _V
-    def get_V(self):
-        return self._V
+    # Setter/getter for _Sy
+    def Sy(self, d=None):
+        if d: self._Sy = d
+        return self._Sy
 
-    # Getter for _S
-    def get_S(self):
-        return self._S
+    def get_viewer_coords(self):
+        return np.array([self._Vx, self._Vy])
+
+    def get_slide_coords(self):
+        return np.array([self._Sx, self._Sy])
 
     def rotate_slide(self, theta):
         # Form rotation matrix
         R = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
-        X = np.matmul(R, self.get_S())
-        self._S = np.array(X)
-        return self.get_S()
+        X = np.matmul(R, self.get_slide_coords())
+        self._Sx = X[0]
+        self._Sy = X[1]
+        return self.get_slide_coords()
         
 
 def main():
@@ -56,7 +69,7 @@ def main():
 
     # Output display on initial loading
     print("\nOn initially loading the silde into the viewer:")
-    print(f"Viewer pixel ({V1.get_V()[0]:.2f}, {V1.get_V()[1]:.2f}) displays slide pixel ({V1.get_S()[0]:.2f}, {V1.get_S()[1]:.2f})") 
+    print(f"Viewer pixel ({V1.Vx():.2f}, {V1.Vy():.2f}) displays slide pixel ({V1.Sx():.2f}, {V1.Sy():.2f})") 
 
     # User rotation - counter-clockwise rotation of the slide around the center
     angle = 90 # [ degrees ]
@@ -66,7 +79,7 @@ def main():
 
     # Output the slide pixel to display in the viewer after a rotation
     print(f"\nAfter a {angle} degree rotation of the slide by the user:")
-    print(f"Viewer pixel ({V1.get_V()[0]:.2f}, {V1.get_V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_1[0]:.2f}, {slide_pixel_rot_1[1]:.2f})")
+    print(f"Viewer pixel ({V1.Vx():.2f}, {V1.Vy():.2f}) displays slide pixel ({slide_pixel_rot_1[0]:.2f}, {slide_pixel_rot_1[1]:.2f})")
 
     # Rotate back again
     angle = -angle # [ degrees ] Negative rotation angle is a clockwise rotation 
@@ -75,7 +88,7 @@ def main():
 
     # Output the slide pixel to display in the viewer after a rotation
     print(f"\nAfter a {angle} degree rotation of the slide by the user:")
-    print(f"Viewer pixel ({V1.get_V()[0]:.2f}, {V1.get_V()[1]:.2f}) displays slide pixel ({slide_pixel_rot_2[0]:.2f}, {slide_pixel_rot_2[1]:.2f})\n")
+    print(f"Viewer pixel ({V1.Vx():.2f}, {V1.Vy():.2f}) displays slide pixel ({slide_pixel_rot_2[0]:.2f}, {slide_pixel_rot_2[1]:.2f})\n")
 
 
 if __name__ == "__main__":
