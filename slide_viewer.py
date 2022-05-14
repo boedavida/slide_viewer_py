@@ -23,10 +23,10 @@ import numpy as np
 
 class Display:
     def __init__(self, Vx0, Vy0, Sx0, Sy0):
-        self._Vx = Vx0
-        self._Vy = Vy0
-        self._Sx = Sx0
-        self._Sy = Sy0
+        self._Vx = Vx0 # Viewer pixel x-coordinate
+        self._Vy = Vy0 # Viewer pixel y-coordinate
+        self._Sx = Sx0 # Slide pixel x-coordinate displayed in viewer pixel x-coordinate
+        self._Sy = Sy0 # Slide pixel y-coordinate displayed in viewer pixel y-coordinate
     
     # Setter/getter for _Vx
     def Vx(self, a=None):
@@ -49,17 +49,17 @@ class Display:
         return self._Sy
 
     def get_viewer_coords(self):
-        return np.array([self._Vx, self._Vy])
+        return np.array([self.Vx(), self.Vy()])
 
     def get_slide_coords(self):
-        return np.array([self._Sx, self._Sy])
+        return np.array([self.Sx(), self.Sy()])
 
     def rotate_slide(self, theta):
         # Form rotation matrix
         R = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
         X = np.matmul(R, self.get_slide_coords())
-        self._Sx = X[0]
-        self._Sy = X[1]
+        self.Sx(X[0])
+        self.Sy(X[1])
         return self.get_slide_coords()
         
 
