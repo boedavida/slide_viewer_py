@@ -58,8 +58,8 @@ class Display:
         # Form rotation matrix
         R = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
         X = np.matmul(R, self.get_slide_coords())
-        self.Sx(X[0])
-        self.Sy(X[1])
+        self._Sx = X[0]
+        self._Sy = X[1]
         return self.get_slide_coords()
         
 
